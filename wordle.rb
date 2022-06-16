@@ -1,8 +1,9 @@
 
 class Wordle 
-  def initialize(mice)
+  def initialize
     @dictionary = get_dictionary
     @answer = get_game_answer
+    @answer_arr = @answer.split("")
     @num_guesses = 0
     @user_won = false
   end
@@ -27,7 +28,7 @@ class Wordle
 
   def check_guess(guess)
     if (guess.length <=> 5) != 0
-      STDOUT.puts("That wasn't a 5 letter word.")
+      STDOUT.puts("That wasn't a 5 letter word.\n")
       prompt
       return
     end
@@ -38,7 +39,9 @@ class Wordle
       @user_wone = true
       STDOUT.puts("You win!!!")
     else 
-      check_letters(guess)
+      result = check_letters(guess)
+      STDOUT.puts("\nGuess ##{@num_guesses}: #{result.join("")}\n\n")
+      prompt
     end
   end
 
@@ -50,7 +53,16 @@ class Wordle
   end
 
   def check_letters(guess)
-    STDOUT.puts("checking letters")
-    prompt
+    result = []
+    guess.split("").each_with_index{ |letter, index| 
+      if letter == @answer[index]
+        result << "#{letter} "
+      elsif @answer_arr.include?(letter)
+        result << "~#{letter}~ "
+      else
+        result << "!#{letter}! "
+      end
+    }
+    return result
   end
 end

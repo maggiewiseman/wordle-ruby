@@ -1,4 +1,4 @@
 load "wordle.rb"
 
-game = Wordle.new(1)
+game = Wordle.new
 game.start
