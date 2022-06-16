@@ -46,10 +46,13 @@ class Wordle
   end
 
   def get_dictionary
+    str = File.read("dictionary.csv")
+    STDOUT.puts(str)
+    str.split(",")
   end
 
   def get_game_answer
-    @answer = "opine"
+    @dictionary[rand(@dictionary.length)]
   end
 
   def check_letters(guess)
